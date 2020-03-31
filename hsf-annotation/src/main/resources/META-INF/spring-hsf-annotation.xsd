@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xsd:schema xmlns="http://www.weidiango.com/schema/hsf/annotation"
+		xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+		targetNamespace="http://www.weidiango.com/schema/hsf/annotation"
+		elementFormDefault="qualified"
+		attributeFormDefault="unqualified">
+
+	<xsd:element name="provider">
+		<xsd:complexType>
+			<xsd:attribute name="group" type="xsd:string" use="required"></xsd:attribute>
+			<xsd:attribute name="version" type="xsd:string" use="optional" default="1.0.0"></xsd:attribute>
+			<!--该配置对接口中的所有方法生效，但是如果客户端通过 methodSpecials 属性对某方法配置了超时时间，则该方法的超时时间以客户端配置为准。其他方法不受影响，还是以服务端配置为准 -->
+			<xsd:attribute name="clientTimeout" type="xsd:integer" use="optional"></xsd:attribute>
+			<!-- 单独针对这个服务设置核心线程池，从公用线程池中划分出来。-->
+			<xsd:attribute name="corePoolSize" type="xsd:integer" use="optional"></xsd:attribute>
+			<!-- 开启分布式事务GTS -->
+			<xsd:attribute name="enableTXC" type="xsd:boolean" use="optional"></xsd:attribute>
+			<!--单独针对这个服务设置线程池，从公用线程池中划分出来。 -->
+			<xsd:attribute name="maxPoolSize" type="xsd:integer" use="optional"></xsd:attribute>
+			<!--可选配置，类型为 [String(hessian｜java)]，含义为序列化类型，默认为 hessian。 -->
+			<xsd:attribute name="serializeType" type="xsd:string" use="optional">
+			<!--methodSpecials需要再加入 为每个方法配置超时时间 -->
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="consumer">
+		<xsd:complexType>
+			<xsd:attribute name="group" type="xsd:string" use="required"></xsd:attribute>
+			<xsd:attribute name="version" type="xsd:string" default="1.0.0"></xsd:attribute>
+			<xsd:attribute name="target" type="xsd:string" use = "optional"></xsd:attribute>
+			<xsd:attribute name="connectionNum" type="xsd:integer" use = "optional"></xsd:attribute>
+			<xsd:attribute name="clientTimeout" type="xsd:integer" use = "optional"></xsd:attribute>
+			<xsd:attribute name="maxWaitTimeForCsAddress" type="xsd:string" use = "optional"></xsd:attribute>
+			<xsd:attribute name="package" type="xsd:string" use = "required"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="auto-hsf-annotation"/>
+
+	<xsd:element name="auto-provider-hsf-annotation"/>
+
+	<xsd:element name="auto-consumer-hsf-annotation"/>
+
+
+</xsd:schema>

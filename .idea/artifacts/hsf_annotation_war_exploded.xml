@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="hsf-annotation:war exploded">
+    <output-path>$PROJECT_DIR$/hsf-annotation/target/hsf-annotation</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="hsf-annotation" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/hsf-annotation/target/hsf-annotation/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="hsf-annotation/web/Web" />
+    </root>
+  </artifact>
+</component>
