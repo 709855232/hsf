@@ -6,6 +6,7 @@ import com.weidiango.spring.exception.HSFAnnotationHandlerException;
 import com.weidiango.spring.schema.HSFConsumerAnnotationBeanDefinitionParser;
 import com.weidiango.spring.util.Consumer;
 import com.weidiango.spring.util.ConsumerBeanDefinition;
+import com.weidiango.spring.util.HSFAnnotationUtil;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.*;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
@@ -83,13 +84,14 @@ public class HSFConsumerPostProcessor extends AbstractHSFPostProcessor implement
             String existBeanName = hasAdded(beanDef);
             if(existBeanName == null){
                 String id = generateBeanName(generateReferenceBeanName(field.getType()),registry);
+                if(reference.value() != null && !reference.value().trim().isEmpty()){
+                    id = reference.value();
+                }
                 putConsumerBeanDefinitions(new ConsumerBeanDefinition(id,beanDef));
                 BeanDefinitionHolder holder = new BeanDefinitionHolder(beanDef, id);
                 BeanDefinitionReaderUtils.registerBeanDefinition(holder, registry);
-                //processAnnotation(field,id);
                 continue;
             }
-            //processAnnotation(field,existBeanName);
         }
     }
 
@@ -140,6 +142,11 @@ public class HSFConsumerPostProcessor extends AbstractHSFPostProcessor implement
             }
         }
         return null;
+    }
+
+    @Override
+    public String generateBeanName(String beanName,BeanDefinitionRegistry registry){
+        return HSFAnnotationUtil.generateBeanName(beanName,registry);
     }
 
     @Override
