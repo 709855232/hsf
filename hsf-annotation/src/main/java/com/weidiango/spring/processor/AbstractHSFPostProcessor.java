@@ -61,7 +61,7 @@ public abstract class AbstractHSFPostProcessor implements BeanDefinitionRegistry
             Iterator<Field> i$ = fields.iterator();
             while (i$.hasNext()){
                 Field field = i$.next();
-                if(field.getName().equals(resolveProviderAlias(fieldName,object.getClass()))){
+                if(field.getName().equals(resolveProviderAlias(fieldName))){
                     field.setAccessible(true);
                     return isRequired(fieldName,field.get(object));
                 }
@@ -93,7 +93,7 @@ public abstract class AbstractHSFPostProcessor implements BeanDefinitionRegistry
             Object value = method.invoke(t);
             value = processGlobalConstant(method.getName(), value, object);
             if(value != null){
-                beanDefinition.getPropertyValues().addPropertyValue((String) resolveProviderAlias(method.getName(),object.getClass()),value);
+                beanDefinition.getPropertyValues().addPropertyValue((String) resolveProviderAlias(method.getName()),value);
             }
         }
     }
@@ -154,8 +154,8 @@ public abstract class AbstractHSFPostProcessor implements BeanDefinitionRegistry
         return AliasMappingRegistry.resolveRequiredAlias(alias);
     }
 
-    public static Object resolveProviderAlias(String alias,Class<?> clazz){
-        return AliasMappingRegistry.resolveProviderAlias(alias,clazz);
+    public Object resolveProviderAlias(String alias){
+        return AliasMappingRegistry.resolveProviderAlias(alias,getConstantBeanClass());
     }
 
     public Collection<Field> obtainAllFileds(Class<?> clazz,boolean containParents){
