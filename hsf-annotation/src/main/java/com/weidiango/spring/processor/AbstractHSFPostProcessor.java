@@ -111,7 +111,7 @@ public abstract class AbstractHSFPostProcessor implements BeanDefinitionRegistry
 
     public boolean eqaulsAttributes(BeanDefinition existBeanDefinition,BeanDefinition newBeanDefinition){
         for (String attribute : eqaulsAttributes()) {
-            if(!existBeanDefinition.getPropertyValues().get(attribute).equals(newBeanDefinition.getPropertyValues().get(attribute))){
+            if(!newBeanDefinition.getPropertyValues().get(attribute).equals(existBeanDefinition.getPropertyValues().get(attribute))){
                 return false;
             }
         }
